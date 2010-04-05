@@ -949,7 +949,7 @@
     (unless explicit-flush (flush-output port)))
   'nil)
 
-(xdef write (lambda args (printwith write   args)))
+(defarc write (arc-write . args) (printwith write args))
 (xdef disp  (lambda args (printwith display args)))
 
 ; sread = scheme read. eventually replace by writing read
@@ -1157,7 +1157,7 @@
         (if (eqv? expr ':a)
             'done
             (let ((val (arc-eval expr)))
-              (write (ac-denil val))
+              (arc-write val)
               (namespace-set-variable-value! '_that val)
               (namespace-set-variable-value! '_thatexpr expr)
               (newline)
