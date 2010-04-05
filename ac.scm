@@ -650,6 +650,19 @@
 ; default vals with them.  To make compatible with existing written tables, 
 ; just use an atom or 3-elt list to keep the default.
 
+(define table-vivifier (make-hash-table 'weak))
+
+(define (ar-table-get fn args)
+  (ar-nill
+   (or (hash-table-get fn 
+                       (car args) 
+                       (if (pair? (cdr args)) (cadr args) #f))
+       (let ((vivifier (hash-table-get table-vivifier fn #f)))
+         (and vivifier
+              (let ((val (vivifier)))
+                (hash-table-put! fn (car args) val)
+                val))))))
+
 (define (ar-apply fn args)
   (cond ((procedure? fn) 
          (apply fn args))
@@ -657,10 +670,7 @@
          (list-ref fn (car args)))
         ((string? fn) 
          (string-ref fn (car args)))
-        ((hash-table? fn) 
-         (ar-nill (hash-table-get fn 
-                                  (car args) 
-                                  (if (pair? (cdr args)) (cadr args) #f))))
+        ((hash-table? fn) (ar-table-get fn args))
 ; experiment: means e.g. [1] is a constant fn
 ;       ((or (number? fn) (symbol? fn)) fn)
 ; another possibility: constant in functional pos means it gets 
@@ -1082,7 +1092,10 @@
 
 (xdef table (lambda args
               (let ((h (make-hash-table 'equal)))
-                (if (pair? args) ((car args) h))
+                (if (and (pair? args) (not (ar-false? (car args))))
+                     ((car args) h))
+                (if (and (pair? args) (pair? (cdr args)))
+                     (hash-table-put! table-vivifier h (cadr args)))
                 h)))
 
 ;(xdef table (lambda args
