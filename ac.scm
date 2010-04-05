@@ -1161,8 +1161,10 @@
   (display "Use (quit) to quit, (tl) to return here after an interrupt.\n")
   (tl2))
 
+(xdef arc-prompt "arc> ")
+
 (define (tl2)
-  (display "arc> ")
+  (display (namespace-variable-value (ac-global-name 'arc-prompt)))
   (on-err (lambda (c) 
             (set! last-condition* c)
             (display "Error: ")
