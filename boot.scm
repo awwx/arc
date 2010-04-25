@@ -1,9 +1,9 @@
 (current-load-relative-directory (current-directory))
 
+(require "ar.scm")
 (require "ac.scm")
 (require "brackets.scm")
 (use-bracket-readtable)
 
 (acompile "arc.arc")
-(require "arcc/ar.scm")
-(acompile "arcc/ac.arc")
+(acompile "ac.arc")

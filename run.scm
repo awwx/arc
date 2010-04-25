@@ -3,10 +3,10 @@
 (require "brackets.scm")
 (use-bracket-readtable)
 
-(require "arcc/ar.scm")
+(require "ar.scm")
 
 (load "arc.arc.scm")
-(load "arcc/ac.arc.scm")
+(load "ac.arc.scm")
 
 (_load "libs.arc")
 (_tl)

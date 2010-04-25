@@ -5,7 +5,6 @@
 (provide (all-defined))
 (require (lib "port.ss"))
 (require (lib "process.ss"))
-(require (lib "pretty.ss"))
 (require (lib "foreign.ss"))
 (unsafe!)
 
