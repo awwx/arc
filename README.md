@@ -1,4 +1,6 @@
-Michael Arntzenius's port of the Arc compiler to Arc.
+Michael Arntzenius's port of the Arc compiler to Arc, with the
+additional step of having the original Arc compiler ac.scm (written in
+Scheme) to also use the extracted Arc runtime ar.scm.
 
 To initialize:
 
